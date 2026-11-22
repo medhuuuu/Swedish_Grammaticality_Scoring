@@ -56,7 +56,7 @@ Counted by splitting the `error` field on ';' (approximate).
 
 If one length range is mostly poor or mostly good, a model can cheat on length; check this.
 
-Tokens (AI-Sweden-Models/ModernBERT-large): 16.84 (min 5, median 14.0, max 50). **0 of 598 texts are longer than 128 tokens**, the baseline's max_length, so their ends are cut off.
+Tokens (AI-Sweden-Models/ModernBERT-large): 16.84 (min 5, median 14.0, max 50). **0 of 598 texts are longer than 128 tokens**, so the baseline's max_length=128 cuts nothing off.
 
 ## 5. Good/poor pairs (train)
 

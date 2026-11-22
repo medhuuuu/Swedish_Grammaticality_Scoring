@@ -1,5 +1,7 @@
 """Analyse the starter toy data: labels, scores, error types, error counts, text length and pair edits.
 
+Run from the repo root:
+    python scripts/analyze_data.py
 
 Writes a Markdown report to results/data_analysis.md and prints it.
 Uses only the standard library; token counts are added if the ModernBERT tokenizer is available.
@@ -162,9 +164,10 @@ def main():
             tok = AutoTokenizer.from_pretrained(args.tokenizer)
             lens = [len(tok(r["text"])["input_ids"]) for r in everything]
             over = sum(n > 128 for n in lens)
+            note = ("so their ends are cut off by the baseline" if over
+                    else "so the baseline's max_length=128 cuts nothing off")
             out += [f"Tokens ({args.tokenizer}): {summary(lens)}. "
-                    f"**{over} of {len(lens)} texts are longer than 128 tokens**, "
-                    "the baseline's max_length, so their ends are cut off.", ""]
+                    f"**{over} of {len(lens)} texts are longer than 128 tokens**, {note}.", ""]
         except Exception as e:  # tokenizer not installed or not downloadable
             out += [f"(Token counts skipped: {type(e).__name__})", ""]
 
