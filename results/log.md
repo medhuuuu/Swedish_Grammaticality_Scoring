@@ -28,3 +28,19 @@ Full report: results/data_analysis.md (script: scripts/analyze_data.py)
 - Texts short: median 8 words / 14 tokens, max 50 tokens; 0/598 > 128 tokens
   → no truncation on toy data; use max_length 256–512 in final model
     in case hidden test has longer texts
+
+## 2026-11-23: Step 2, evaluation setup
+
+- scripts/evaluate_dev.py: 95% bootstrap CI, pair accuracy, error-type AUC, logs to results/runs.csv
+- Baseline (--split test, 120 ex): Spearman 0.528 (0.375–0.661) | AUC 0.783 (0.698–0.862) | 40.0 s | 180/min
+- Takeaways:
+  - CI ±0.14 on 120 examples → use --split all (598) for own-data models
+  - Predictions compressed (good 0.75 vs poor 0.56; gold 0.95 vs ~0.35)
+  - Laptop timing varies 30–40 s between runs → report median of 3 runs
+- Baseline error analysis (test split, results/runs/baseline/scores.jsonl):
+  - 22/60 poor texts scored > 0.7 → misses single-word morphology errors
+    (förstå, mitt nya cykel, grannar, inlämnat, ägar, mer korta)
+  - Some correct texts scored < 0.5 (e.g. "Algoritmen sorterar listan…" 0.49)
+    → hypothesis: embeddings capture topic more than grammar
+  - Catches texts with many errors (0.0–0.2), e.g. "Efter skolan barnen brukar lekar i park…"
+  → need fine-tuning + synthetic data rich in subtle 1-word errors

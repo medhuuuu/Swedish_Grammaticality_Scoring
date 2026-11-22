@@ -1,0 +1,2 @@
+time,name,split,n,spearman,spearman_lo,spearman_hi,auc,auc_lo,auc_hi,pair_acc,seconds,samples_per_min,notes
+2026-11-23T00:07:23,baseline,test,120,0.5283,0.3746,0.6612,0.7833,0.6979,0.8619,nan,40.0,180,"ModernBERT-large mean-pool + SVR, laptop CPU"
