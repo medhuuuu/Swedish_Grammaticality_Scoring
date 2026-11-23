@@ -6,3 +6,5 @@ models/
 outputs/
 *.pt
 *.safetensors
+results/runs/*/input.jsonl
+data/own/

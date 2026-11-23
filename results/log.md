@@ -44,3 +44,16 @@ Full report: results/data_analysis.md (script: scripts/analyze_data.py)
     → hypothesis: embeddings capture topic more than grammar
   - Catches texts with many errors (0.0–0.2), e.g. "Efter skolan barnen brukar lekar i park…"
   → need fine-tuning + synthetic data rich in subtle 1-word errors
+
+## 2026-11-23: Step 3a, clean text pool
+
+- scripts/build_clean_pool.py → data/own/clean_pool.jsonl (84,723 texts, seed 0)
+- Sources: Talbanken 4,723 | Tatoeba 40,000 | Wikipedia 40,000 (first 15k articles)
+  (read: 6,038 | 56,870 | 1,012,606)
+- Filters: 3–40 words, capital start + .!? end, no markup/URLs, few digits, Swedish function word
+- Leakage check removed 13 texts that matched toy data (11 Tatoeba, 2 Wikipedia)
+- Multi-sentence texts ≈ 2.3% (toy data ≈ 3%)
+- Manual check (30 random): ~28 clean; 1 verbless Wikipedia list fragment, 1 old heading-style
+  → add "must contain a verb" filter in 3b (spaCy POS)
+- Limitations: Talbanken is 1970s–80s Swedish; some Tatoeba sentences written by learners;
+  Tatoeba reuses a few names (Tom, Mary)
